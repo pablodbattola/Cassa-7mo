@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 // Podés dejar esta clave hardcodeada si no usás .env todavía
-const JWT_SECRET = "fanySuperJWT@2024_CLAVEsegura";
+const JWT_SECRET = "pabloJWT@2024_CLAVEsegura";
 
 export const verifyToken = (req: Request, res: Response, next: NextFunction): void => {
   const authHeader = req.headers.authorization;
