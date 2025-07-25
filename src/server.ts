@@ -5,6 +5,7 @@ import express from "express"
 import UserRouter from "./routes/user.routes"
 import ProductRouter from "./routes/product.routes"
 import AuthRouter from "./routes/auth.routes"
+import OrderRouter from "./routes/order.routes"
 
 const server = express()
 
@@ -14,5 +15,6 @@ server.use(cors())
 server.use("", UserRouter) // ✅ Correcto
 server.use("", ProductRouter)
 server.use("", AuthRouter)
+server.use("", OrderRouter)
 
 export default server

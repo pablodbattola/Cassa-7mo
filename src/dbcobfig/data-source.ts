@@ -1,8 +1,10 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
 import { User } from "../entities/user.entity"
-import "dotenv/config";
 import { Product } from "../entities/product.entity";
+import { Order } from "../entities/order.entity";
+import { OrderDetail } from "../entities/orderDetail.entity";
+
 
 export const AppDataSource = new DataSource({
     type: "postgres",
@@ -13,7 +15,7 @@ export const AppDataSource = new DataSource({
     database: "typeorm",
     synchronize: true,
     logging: true,
-    entities: [User, Product],
+    entities: [User, Product, Order, OrderDetail],
     subscribers: [],
     migrations: [],
     dropSchema:true,
