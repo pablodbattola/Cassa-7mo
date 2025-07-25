@@ -5,6 +5,8 @@ import {
   createOrderService,
   deleteOrderService
 } from "../services/order.service"
+import ProductRepository from "../repositories/product.repository"
+import UserRepository from "../repositories/user.repository"
 
 export const getAllOrdersController = async (req: Request, res: Response) => {
   try {
@@ -27,14 +29,45 @@ export const getOrderByIdController = async (req: Request, res: Response): Promi
   }
 }
 
+import { OrderDetail } from "../entities/orderDetail.entity";
+import { Order } from "../entities/order.entity"
+
 export const createOrderController = async (req: Request, res: Response) => {
   try {
-    const order = await createOrderService(req.body)
-    res.status(201).json(order)
-  } catch {
-    res.status(500).json({ message: "Error al crear pedido" })
+    const { userId, products } = req.body;
+
+    // Buscar usuario
+    const user = await UserRepository.findById(userId);
+    if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
+
+    // Armar detalles del pedido como OrderDetail[]
+    const details: OrderDetail[] = [];
+
+    for (const item of products) {
+      const product = await ProductRepository.findById(item.productId);
+      if (!product) return res.status(404).json({ message: `Producto ID ${item.productId} no encontrado` });
+
+      const detail = new OrderDetail();
+      detail.product = product;
+      detail.quantity = item.quantity;
+      detail.unitPrice = Number(product.price);
+
+      details.push(detail);
+    }
+
+    const orderData: Partial<Order> = {
+      user,
+      details,
+    };
+
+    const order = await createOrderService(orderData);
+    res.status(201).json(order);
+  } catch (error) {
+    console.error("🛑 Error al crear orden:", error);
+    res.status(500).json({ message: "Error al crear pedido" });
   }
-}
+};
+
 
 export const deleteOrderController = async (req: Request, res: Response): Promise<void> => {
   const id = parseInt(req.params.id)

@@ -25,5 +25,5 @@ export class User {
   isAdmin: boolean // Rol de admin (true o false)
 
   @OneToMany(() => Order, order => order.user)
-orders: Order[]
+  orders: Order[]
 }

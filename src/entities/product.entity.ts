@@ -19,5 +19,5 @@ export class Product {
   stock: number
 
   @OneToMany(() => OrderDetail, detail => detail.product)
-orderDetails: OrderDetail[]
+  orderDetails: OrderDetail[]
 }
