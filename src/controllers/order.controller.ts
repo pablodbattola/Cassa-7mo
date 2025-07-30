@@ -38,14 +38,14 @@ export const createOrderController = async (req: Request, res: Response) => {
 
     // Buscar usuario
     const user = await UserRepository.findById(userId);
-    if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
+    if (!user) res.status(404).json({ message: "Usuario no encontrado" });
 
     // Armar detalles del pedido como OrderDetail[]
     const details: OrderDetail[] = [];
 
     for (const item of products) {
       const product = await ProductRepository.findById(item.productId);
-      if (!product) return res.status(404).json({ message: `Producto ID ${item.productId} no encontrado` });
+      if (!product) res.status(404).json({ message: `Producto ID ${item.productId} no encontrado` });
 
       const detail = new OrderDetail();
       detail.product = product;
