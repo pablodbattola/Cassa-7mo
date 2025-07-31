@@ -7,7 +7,13 @@ import ProductRouter from "./routes/product.routes"
 import AuthRouter from "./routes/auth.routes"
 import OrderRouter from "./routes/order.routes"
 
+import swaggerUi from 'swagger-ui-express';
+import swaggerJsdoc from 'swagger-jsdoc';
+import { swaggerOptions } from './doc/SwaggerConfig';
+
 const server = express()
+const specs = swaggerJsdoc(swaggerOptions);
+server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 server.use(express.json())
 server.use(morgan("dev")) // ✅ Agregado formato
