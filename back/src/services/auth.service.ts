@@ -1,5 +1,5 @@
 // src/services/auth.service.ts
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import UserRepository from "../repositories/user.repository"
 import { User } from "../entities/user.entity"
@@ -18,6 +18,7 @@ export const loginService = async (
     { id: user.id, email: user.email, isAdmin: user.isAdmin },
     "pabloJWT@2024_CLAVEsegura"!,
     { expiresIn: "1h" }
+
   )
 
   // No devolvemos la contraseña
@@ -25,3 +26,4 @@ export const loginService = async (
 
   return { token, user: userWithoutPassword }
 }
+

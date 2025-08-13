@@ -1,6 +1,6 @@
 import { User } from "../entities/user.entity"
 import UserRepository from "../repositories/user.repository"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 
 
 export const getAllUsersService = async (): Promise<User[]> => {
